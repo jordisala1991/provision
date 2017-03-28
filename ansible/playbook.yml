@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  vars_files:
+    - vars/all.yml
+  gather_facts: false
+  pre_tasks:
+    - name: Ensure python is installed
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: false
+    - setup: # gather_facts
+  roles:
+    - repository
+    - yatesr.timezone
+    - Stouts.locale
+    - GROG.package
+    - geerlingguy.apache
+    - geerlingguy.php
+    - geerlingguy.php-pecl
+    - geerlingguy.apache-php-fpm
+    - configuration

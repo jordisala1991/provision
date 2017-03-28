@@ -1,0 +1,30 @@
+---
+- name: Create user
+  user:
+    name: '{{ user }}'
+
+- name: Add codeit.guru repository
+  get_url:
+    url: https://repo.codeit.guru/codeit.el7.repo
+    dest: /etc/yum.repos.d
+
+- name: Create ssl directory
+  file:
+    path: /etc/ssl/private
+    state: directory
+    mode: 0755
+
+- name: Generate rsa key
+  command: openssl genrsa -out /etc/ssl/private/{{ project_name }}.key 2048
+  args:
+    creates: '/etc/ssl/private/{{ project_name }}.key'
+
+- name: Generate self-signed ssl certificate
+  command: >
+    openssl req
+      -new -x509 -days 3650
+      -key /etc/ssl/private/{{ project_name }}.key
+      -out /etc/ssl/certs/{{ project_name }}.cert
+      -subj /CN={{ host }}
+  args:
+    creates: '/etc/ssl/certs/{{ project_name }}.cert'

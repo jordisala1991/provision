@@ -1,0 +1,56 @@
+---
+- name: Configure user
+  user:
+    name: '{{ user }}'
+    createhome: no
+    append: yes
+    groups: apache
+
+- name: Create app folder
+  file:
+    path: '{{ project_remote_folder }}'
+    owner: apache
+    group: apache
+    mode: 0775
+    state: directory
+
+- name: Modify settings on php-fpm
+  lineinfile:
+    dest: '{{ php_fpm_pool_conf_path }}'
+    regexp: ';?{{ item.setting }} ?=.*'
+    line: '{{ item.setting }} = {{ item.value }}'
+  with_items: '{{ php_fpm_settings }}'
+
+- name: Modify settings on php.ini
+  lineinfile:
+    dest: '/etc/php.ini'
+    regexp: ';?{{ item.setting }} ?=.*'
+    line: '{{ item.setting }} = {{ item.value }}'
+  with_items: '{{ php_settings }}'
+
+- name: Enable apc.so
+  lineinfile:
+    dest: '/etc/php.d/50-apc.ini'
+    line: 'extension=apc.so'
+
+- name: Add deflate settings
+  template:
+    src: deflate.conf
+    dest: /etc/httpd/conf.d/deflate.conf
+
+- name: Add mpm settings
+  template:
+    src: mpm.conf
+    dest: /etc/httpd/conf.d/mpm.conf
+
+- name: Disable mpm_prefork
+  lineinfile:
+    dest: '/etc/httpd/conf.modules.d/00-mpm.conf'
+    regexp: '^LoadModule mpm_prefork_module modules/mod_mpm_prefork.so'
+    line: '# LoadModule mpm_prefork_module modules/mod_mpm_prefork.so'
+
+- name: Enable mpm_event
+  lineinfile:
+    dest: '/etc/httpd/conf.modules.d/00-mpm.conf'
+    regexp: '^# ?LoadModule mpm_event_module modules/mod_mpm_event.so'
+    line: 'LoadModule mpm_event_module modules/mod_mpm_event.so'
