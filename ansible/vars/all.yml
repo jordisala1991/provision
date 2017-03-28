@@ -30,19 +30,19 @@ php_realpath_cache_size: '5M'
 
 php_enablerepo: ius
 php_packages:
-  - php70u-devel
-  - php70u-cli
-  - php70u-fpm-httpd
-  - php70u-gd
-  - php70u-intl
-  - php70u-json
-  - php70u-mbstring
-  - php70u-mcrypt
-  - php70u-mysqlnd
-  - php70u-opcache
-  - php70u-xml
-  - php70u-pecl-apcu
-  - php70u-pecl-apcu-devel
+  - php71u-devel
+  - php71u-cli
+  - php71u-fpm-httpd
+  - php71u-gd
+  - php71u-intl
+  - php71u-json
+  - php71u-mbstring
+  - php71u-mcrypt
+  - php71u-mysqlnd
+  - php71u-opcache
+  - php71u-xml
+  - php71u-pecl-apcu
+  - php71u-pecl-apcu-devel
 php_enable_php_fpm: true
 php_fpm_daemon: php-fpm
 php_fpm_listen: /var/run/php-fpm/php-fpm.sock
@@ -62,7 +62,6 @@ php_settings:
 
 # Apache
 apache_global_vhost_settings: |
-  DirectoryIndex app.php
   ServerTokens ProductOnly
   ServerSignature Off
   SSLUseStapling on

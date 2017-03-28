@@ -8,6 +8,7 @@
     url: https://repo.codeit.guru/codeit.el7.repo
     dest: /etc/yum.repos.d
 
+# Change for let's encrypt
 - name: Create ssl directory
   file:
     path: /etc/ssl/private
