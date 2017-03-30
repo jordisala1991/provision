@@ -4,6 +4,12 @@
 - src: geerlingguy.apache-php-fpm
   version: 1.0.2
 
+- src: geerlingguy.certbot
+  version: 1.0.1
+
+- src: geerlingguy.mysql
+  version: 2.5.1
+
 - src: geerlingguy.php
   version: 3.4.4
 

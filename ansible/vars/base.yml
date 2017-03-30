@@ -1,0 +1,21 @@
+---
+user: provision
+project_name: project
+project_remote_folder: '/var/www/{{ project_name }}'
+project_relative_index_path: web
+
+# Locale
+locale_locales:
+  - es_ES.UTF-8
+
+# Timezone
+timezone: Europe/Madrid
+
+# Packages
+package_list:
+  - { yum: gcc }
+  - { yum: git }
+  - { yum: zip }
+  - { yum: unzip }
+  - { yum: 'https://centos7.iuscommunity.org/ius-release.rpm' }
+  - { yum: mariadb-libs, state: absent }

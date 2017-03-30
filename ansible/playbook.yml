@@ -2,7 +2,10 @@
 - hosts: all
   become: true
   vars_files:
-    - vars/all.yml
+    - vars/apache.yml
+    - vars/base.yml
+    - vars/mysql.yml
+    - vars/php.yml
   gather_facts: false
   pre_tasks:
     - name: Ensure python is installed
@@ -10,7 +13,7 @@
       changed_when: false
     - setup: # gather_facts
   roles:
-    - repository
+    - before
     - yatesr.timezone
     - Stouts.locale
     - GROG.package
@@ -18,4 +21,6 @@
     - geerlingguy.php
     - geerlingguy.php-pecl
     - geerlingguy.apache-php-fpm
-    - configuration
+    - geerlingguy.mysql
+    - geerlingguy.certbot
+    - after

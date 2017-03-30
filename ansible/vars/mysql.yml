@@ -1,0 +1,18 @@
+---
+mysql_enablerepo: ius
+mysql_packages:
+  - mariadb101u
+  - mariadb101u-server
+  - mariadb101u-libs
+  - MySQL-python
+  - perl-DBD-MySQL
+mysql_databases:
+  - name: '{{ project_name }}'
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+mysql_users:
+  - name: '{{ project_name }}'
+    host: '%'
+    password: '{{ project_name }}'
+    priv: '{{ project_name }}.*:ALL'

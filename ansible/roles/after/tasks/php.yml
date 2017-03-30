@@ -1,0 +1,19 @@
+---
+- name: Modify settings on php-fpm
+  lineinfile:
+    dest: '{{ php_fpm_pool_conf_path }}'
+    regexp: ';?{{ item.setting }} ?=.*'
+    line: '{{ item.setting }} = {{ item.value }}'
+  with_items: '{{ php_fpm_settings }}'
+
+- name: Modify settings on php.ini
+  lineinfile:
+    dest: '/etc/php.ini'
+    regexp: ';?{{ item.setting }} ?=.*'
+    line: '{{ item.setting }} = {{ item.value }}'
+  with_items: '{{ php_settings }}'
+
+- name: Enable apc.so
+  lineinfile:
+    dest: '/etc/php.d/50-apc.ini'
+    line: 'extension=apc.so'

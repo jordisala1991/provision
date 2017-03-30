@@ -1,0 +1,11 @@
+---
+- name: Create user
+  user:
+    name: '{{ user }}'
+
+- name: Add codeit.guru repository
+  get_url:
+    url: https://repo.codeit.guru/codeit.el7.repo
+    dest: /etc/yum.repos.d
+
+- include: ssl.yml
