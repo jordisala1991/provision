@@ -3,6 +3,31 @@
   user:
     name: '{{ user }}'
 
+- name: Create .ssh dir
+  file:
+    path: '/home/{{ user }}/.ssh'
+    state: directory
+    owner: '{{ user }}'
+    group: '{{ user }}'
+    mode: 0700
+
+- name: Assign same authorized keys as root
+  copy:
+    remote_src: true
+    src: /root/.ssh/authorized_keys
+    dest: '/home/{{ user }}/.ssh/authorized_keys'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+    mode: 0600
+
+- name: Add known hosts
+  lineinfile:
+    dest: '/home/{{ user }}/.ssh/known_hosts'
+    create: yes
+    state: present
+    line: "{{ lookup('pipe', 'ssh-keyscan -t rsa ' + item) }}"
+  with_items: '{{ known_hosts }}'
+
 - name: Add codeit.guru repository
   get_url:
     url: https://repo.codeit.guru/codeit.el7.repo

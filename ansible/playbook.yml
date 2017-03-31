@@ -17,10 +17,9 @@
     - yatesr.timezone
     - Stouts.locale
     - GROG.package
+    - geerlingguy.mysql
     - geerlingguy.apache
     - geerlingguy.php
     - geerlingguy.php-pecl
     - geerlingguy.apache-php-fpm
-    - geerlingguy.mysql
-    - geerlingguy.certbot
     - after

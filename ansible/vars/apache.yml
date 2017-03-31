@@ -22,12 +22,12 @@ apache_vhosts:
       Redirect permanent / https://{{ host }}
 apache_vhosts_ssl:
   - servername: '{{ host }}'
-    documentroot: '{{ project_remote_folder }}/current/{{ project_relative_index_path }}'
+    documentroot: '{{ project_remote_folder }}/{{ project_relative_index_path }}'
     certificate_file: '/etc/ssl/certs/{{ project_name }}.cert'
     certificate_key_file: '/etc/ssl/private/{{ project_name }}.key'
     extra_parameters: |
       Protocols h2 http/1.1
-      ProxyPassMatch ^/(.*\.php)$ "unix:{{ php_fpm_listen }}|fcgi://localhost{{ project_remote_folder }}/current/{{ project_relative_index_path }}"
+      ProxyPassMatch ^/(.*\.php)$ "unix:{{ php_fpm_listen }}|fcgi://localhost{{ project_remote_folder }}/{{ project_relative_index_path }}"
       Header unset ETag
       FileETag None
       SSLSessionTickets off

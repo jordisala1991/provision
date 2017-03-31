@@ -2,15 +2,14 @@
 - name: Configure user
   user:
     name: '{{ user }}'
-    createhome: no
     append: yes
-    groups: apache
+    groups: '{{ apache_user }}'
 
 - name: Create app folder
   file:
     path: '{{ project_remote_folder }}'
-    owner: apache
-    group: apache
+    owner: '{{ apache_user }}'
+    group: '{{ apache_user }}'
     mode: 0775
     state: directory
 

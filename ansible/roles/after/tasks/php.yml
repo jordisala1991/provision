@@ -17,3 +17,10 @@
   lineinfile:
     dest: '/etc/php.d/50-apc.ini'
     line: 'extension=apc.so'
+
+- name: Configure php-fpm permissions
+  file:
+    path: /var/lib/php/fpm
+    state: directory
+    group: '{{ apache_user }}'
+    recurse: yes

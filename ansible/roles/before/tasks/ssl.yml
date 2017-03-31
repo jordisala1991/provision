@@ -1,5 +1,4 @@
 ---
-# Change for let's encrypt
 - name: Create ssl directory
   file:
     path: /etc/ssl/private

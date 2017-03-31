@@ -1,8 +1,9 @@
 ---
 user: provision
+apache_user: apache
 project_name: project
 project_remote_folder: '/var/www/{{ project_name }}'
-project_relative_index_path: web
+project_relative_index_path: current/web
 
 # Locale
 locale_locales:
@@ -18,4 +19,8 @@ package_list:
   - { yum: zip }
   - { yum: unzip }
   - { yum: 'https://centos7.iuscommunity.org/ius-release.rpm' }
-  - { yum: mariadb-libs, state: absent }
+  - { yum: 'mariadb-libs.x86_64', state: absent }
+
+known_hosts:
+  - github.com
+  - bitbucket.org
