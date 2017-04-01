@@ -6,7 +6,6 @@ php_opcache_revalidate_path: '1'
 php_opcache_enable_cli: '1'
 php_opcache_max_accelerated_files: '20000'
 php_realpath_cache_size: '5M'
-
 php_enablerepo: ius
 php_packages:
   - php71u-devel
@@ -26,15 +25,12 @@ php_enable_php_fpm: true
 php_fpm_daemon: php-fpm
 php_fpm_listen: /var/run/php-fpm/php-fpm.sock
 php_fpm_pool_user: '{{ user }}'
-
 php_pecl_extensions:
   - apcu_bc-1.0.3
-
 php_fpm_settings:
   - { setting: listen.owner, value: '{{ user }}' }
   - { setting: listen.group, value: apache }
   - { setting: listen.mode, value: 0660 }
-
 php_settings:
   - { setting: realpath_cache_ttl, value: 7200 }
   - { setting: expose_php, value: 'Off' }

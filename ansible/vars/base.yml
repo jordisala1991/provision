@@ -1,18 +1,7 @@
 ---
-user: provision
-apache_user: apache
-project_name: project
-project_remote_folder: '/var/www/{{ project_name }}'
-project_relative_index_path: current/web
-
-# Locale
 locale_locales:
   - es_ES.UTF-8
-
-# Timezone
 timezone: Europe/Madrid
-
-# Packages
 package_list:
   - { yum: gcc }
   - { yum: git }
@@ -21,6 +10,18 @@ package_list:
   - { yum: 'https://centos7.iuscommunity.org/ius-release.rpm' }
   - { yum: 'mariadb-libs.x86_64', state: absent }
 
+
+user: provision
+apache_user: apache
+projects_folder: /var/www
 known_hosts:
   - github.com
   - bitbucket.org
+
+
+project_name: project
+project_url: '{{ host }}'
+project_relative_index_path: current/web
+project_database_name: '{{ project_name }}'
+project_database_user: '{{ project_name }}'
+project_database_password: password

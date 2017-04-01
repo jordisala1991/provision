@@ -8,7 +8,6 @@ apache_global_vhost_settings: |
   SSLStaplingReturnResponderErrors off
   SSLStaplingCache shmcb:/var/run/ocsp(128000)
 apache_remove_default_vhost: true
-apache_vhosts_filename: '{{ project_name }}.conf'
 apache_ssl_protocol: 'All -SSLv3 -TLSv1 -TLSv1.1'
 apache_ssl_cipher_suite: 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256'
 apache_packages:
@@ -16,18 +15,20 @@ apache_packages:
   - httpd-devel
   - mod_ssl
   - openssh
+
+
 apache_vhosts:
-  - servername: '{{ host }}'
+  - servername: '{{ project_url }}'
     extra_parameters: |
-      Redirect permanent / https://{{ host }}
+      Redirect permanent / https://{{ project_url }}
 apache_vhosts_ssl:
-  - servername: '{{ host }}'
-    documentroot: '{{ project_remote_folder }}/{{ project_relative_index_path }}'
+  - servername: '{{ project_url }}'
+    documentroot: '{{ projects_folder }}/{{ project_name }}/{{ project_relative_index_path }}'
     certificate_file: '/etc/ssl/certs/{{ project_name }}.cert'
     certificate_key_file: '/etc/ssl/private/{{ project_name }}.key'
     extra_parameters: |
       Protocols h2 http/1.1
-      ProxyPassMatch ^/(.*\.php)$ "unix:{{ php_fpm_listen }}|fcgi://localhost{{ project_remote_folder }}/{{ project_relative_index_path }}"
+      ProxyPassMatch ^/(.*\.php)$ "unix:{{ php_fpm_listen }}|fcgi://localhost{{ projects_folder }}/{{ project_name }}/{{ project_relative_index_path }}"
       Header unset ETag
       FileETag None
       SSLSessionTickets off

@@ -7,7 +7,7 @@
 
 - name: Create app folder
   file:
-    path: '{{ project_remote_folder }}'
+    path: '{{ projects_folder }}/{{ project_name }}'
     owner: '{{ apache_user }}'
     group: '{{ apache_user }}'
     mode: 0775
