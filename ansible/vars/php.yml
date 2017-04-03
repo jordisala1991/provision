@@ -29,8 +29,8 @@ php_pecl_extensions:
   - apcu_bc-1.0.3
 php_fpm_settings:
   - { setting: listen.owner, value: '{{ user }}' }
-  - { setting: listen.group, value: apache }
-  - { setting: listen.mode, value: 0660 }
+  - { setting: listen.group, value: '{{ apache_user }}' }
+  - { setting: listen.mode, value: '0660' }
 php_settings:
   - { setting: realpath_cache_ttl, value: 7200 }
   - { setting: expose_php, value: 'Off' }

@@ -28,7 +28,9 @@ apache_vhosts_ssl:
     certificate_key_file: '/etc/ssl/private/{{ project_name }}.key'
     extra_parameters: |
       Protocols h2 http/1.1
-      ProxyPassMatch ^/(.*\.php)$ "unix:{{ php_fpm_listen }}|fcgi://localhost{{ projects_folder }}/{{ project_name }}/{{ project_relative_index_path }}"
+      <FilesMatch \.php$>
+        SetHandler "proxy:unix:{{ php_fpm_listen }}|fcgi://localhost"
+      </FilesMatch>
       Header unset ETag
       FileETag None
       SSLSessionTickets off

@@ -22,5 +22,6 @@
   file:
     path: /var/lib/php/fpm
     state: directory
+    owner: '{{ user }}'
     group: '{{ apache_user }}'
     recurse: yes
