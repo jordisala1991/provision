@@ -1,0 +1,48 @@
+---
+locale_locales:
+  - es_ES.UTF-8
+timezone: Europe/Madrid
+
+user: provision
+projects_folder: /var/www
+known_hosts:
+  - github.com
+  - bitbucket.org
+
+apache_extra_ssl_parameters: |
+  Protocols h2 http/1.1
+  <FilesMatch \.php$>
+    SetHandler "proxy:unix:{{ php_fpm_listen }}|fcgi://localhost"
+  </FilesMatch>
+  Header unset ETag
+  FileETag None
+  SSLSessionTickets off
+apache_global_vhost_settings: |
+  DirectoryIndex index.php app.php index.html
+  ServerTokens ProductOnly
+  ServerSignature Off
+  SSLUseStapling on
+  SSLStaplingResponderTimeout 5
+  SSLStaplingReturnResponderErrors off
+  SSLStaplingCache shmcb:/var/run/ocsp(128000)
+apache_remove_default_vhost: true
+apache_ssl_protocol: 'All -SSLv3 -TLSv1 -TLSv1.1'
+apache_ssl_cipher_suite: 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256'
+
+php_date_timezone: '{{ timezone }}'
+php_display_startup_errors: 'Off'
+php_enable_php_fpm: true
+php_error_reporting: 'E_ALL & ~E_DEPRECATED'
+php_expose_php: 'Off'
+php_fpm_daemon: php-fpm
+php_fpm_listen: /var/run/php-fpm/php-fpm.sock
+php_fpm_pool_user: '{{ user }}'
+php_fpm_settings:
+  - { setting: listen.owner, value: '{{ user }}' }
+  - { setting: listen.group, value: '{{ apache_user }}' }
+  - { setting: listen.mode, value: '0660' }
+php_opcache_revalidate_path: '1'
+php_opcache_max_accelerated_files: '20000'
+php_realpath_cache_size: '5M'
+php_settings:
+  - { setting: realpath_cache_ttl, value: 7200 }

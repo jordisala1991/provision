@@ -19,5 +19,5 @@
 - src: Stouts.locale
   version: 1.1.0
 
-- src: yatesr.timezone
-  version: 1.0.0
+- src: Stouts.timezone
+  version: 2.2.0

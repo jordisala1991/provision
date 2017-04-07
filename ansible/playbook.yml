@@ -2,10 +2,9 @@
 - hosts: all
   become: true
   vars_files:
-    - vars/apache.yml
-    - vars/base.yml
-    - vars/mysql.yml
-    - vars/php.yml
+    - vars/RedHat.yml
+    - vars/configuration.yml
+    - vars/projects.yml
   gather_facts: false
   pre_tasks:
     - name: Ensure python is installed
