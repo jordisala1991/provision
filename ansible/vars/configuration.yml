@@ -1,7 +1,7 @@
 ---
 locale_locales:
   - es_ES.UTF-8
-timezone: Europe/Madrid
+timezone_timezone: Europe/Madrid
 
 user: provision
 projects_folder: /var/www
