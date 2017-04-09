@@ -1,3 +1,4 @@
+---
 package_list:
   - { yum: gcc }
   - { yum: git }
@@ -5,6 +6,8 @@ package_list:
   - { yum: unzip }
   - { yum: 'https://centos7.iuscommunity.org/ius-release.rpm' }
   - { yum: 'mariadb-libs.x86_64', state: absent }
+
+certbot_package: certbot
 
 apache_user: apache
 apache_packages:

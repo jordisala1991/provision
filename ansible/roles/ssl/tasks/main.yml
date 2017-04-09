@@ -1,0 +1,8 @@
+---
+- name: Create ssl certificate
+  command: >
+    certbot certonly
+      --agree-tos --email webmaster@{{ project_url }}
+      -n --standalone -d {{ project_url }}
+  args:
+    creates: '/etc/letsencrypt/live/{{ project_url }}'

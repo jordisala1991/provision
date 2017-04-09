@@ -2,9 +2,9 @@
 - hosts: all
   become: true
   vars_files:
-    - vars/RedHat.yml
+    - vars/secret.yml
     - vars/configuration.yml
-    - vars/projects.yml
+    - vars/project.yml
   gather_facts: false
   pre_tasks:
     - name: Ensure python is installed
@@ -13,9 +13,11 @@
     - setup: # gather_facts
   roles:
     - before
-    - yatesr.timezone
+    - Stouts.timezone
     - Stouts.locale
     - GROG.package
+    - geerlingguy.certbot
+    - ssl
     - geerlingguy.mysql
     - geerlingguy.apache
     - geerlingguy.php

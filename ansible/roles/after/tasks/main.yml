@@ -5,13 +5,6 @@
     append: yes
     groups: '{{ apache_user }}'
 
-- name: Create app folder
-  file:
-    path: '{{ projects_folder }}/{{ project_name }}'
-    owner: '{{ apache_user }}'
-    group: '{{ apache_user }}'
-    mode: 0775
-    state: directory
-
+- include: '{{ ansible_os_family }}.yml'
 - include: apache.yml
 - include: php.yml

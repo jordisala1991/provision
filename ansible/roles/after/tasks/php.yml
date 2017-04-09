@@ -8,32 +8,15 @@
 
 - name: Modify settings on php.ini
   lineinfile:
-    dest: '/etc/php.ini'
-    regexp: ';?{{ item.setting }} ?=.*'
-    line: '{{ item.setting }} = {{ item.value }}'
-  with_items: '{{ php_settings }}'
+    dest: '{{ item.0 }}/php.ini'
+    regexp: ';?{{ item.1.setting }} ?=.*'
+    line: '{{ item.1.setting }} = {{ item.1.value }}'
+  with_together:
+    - '{{ php_conf_paths }}'
+    - '{{ php_settings }}'
 
 - name: Enable apc.so
   lineinfile:
-    dest: '/etc/php.d/50-apc.ini'
+    dest: '{{ item }}/{{ php_apc_conf_filename }}'
     line: 'extension=apc.so'
-
-- name: Configure php-fpm permissions
-  file:
-    path: /var/lib/php/fpm
-    state: directory
-    owner: '{{ user }}'
-    group: '{{ apache_user }}'
-    recurse: yes
-
-- name: Configure session maxlifetime script
-  template:
-    src: maxlifetime
-    dest: /etc/maxlifetime
-    mode: 0755
-
-- name: Configure session removal cronjob
-  cron:
-    name: 'purge old sessions'
-    minute: '9,39'
-    job: '[ -d /var/lib/php/fpm/session ] && find /var/lib/php/fpm/session -type f -cmin +$(/etc/maxlifetime) -print0 | xargs -r -0 rm'
+  with_items: '{{ php_extension_conf_paths }}'

@@ -1,5 +1,2 @@
 [provision]
 127.0.0.1
-
-[provision:vars]
-host=provision.dev

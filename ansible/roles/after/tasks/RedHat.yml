@@ -1,0 +1,40 @@
+---
+- name: Configure session maxlifetime script
+  template:
+    src: maxlifetime
+    dest: /etc/maxlifetime
+    mode: 0755
+
+- name: Configure session removal cronjob
+  cron:
+    name: 'purge old sessions'
+    minute: '9,39'
+    job: '[ -d /var/lib/php/fpm/session ] && find /var/lib/php/fpm/session -type f -cmin +$(/etc/maxlifetime) -print0 | xargs -r -0 rm'
+
+- name: Disable mpm_prefork
+  lineinfile:
+    dest: '{{ apache_server_root }}/conf.modules.d/00-mpm.conf'
+    regexp: '^LoadModule mpm_prefork_module modules/mod_mpm_prefork.so'
+    line: '# LoadModule mpm_prefork_module modules/mod_mpm_prefork.so'
+
+- name: Enable mpm_event
+  lineinfile:
+    dest: '{{ apache_server_root }}/conf.modules.d/00-mpm.conf'
+    regexp: '^# ?LoadModule mpm_event_module modules/mod_mpm_event.so'
+    line: 'LoadModule mpm_event_module modules/mod_mpm_event.so'
+
+- name: Remove configuration
+  file:
+    path: '{{ apache_conf_path }}/{{ item }}'
+    state: absent
+  with_items:
+    - ssl.conf
+    - welcome.conf
+
+- name: Configure php-fpm permissions
+  file:
+    path: /var/lib/php/fpm
+    state: directory
+    owner: '{{ apache_user }}'
+    group: '{{ apache_user }}'
+    recurse: yes

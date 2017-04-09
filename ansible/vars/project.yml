@@ -1,0 +1,30 @@
+---
+known_hosts:
+  - github.com
+  - bitbucket.org
+
+apache_vhosts:
+  - servername: '{{ project_url }}'
+    extra_parameters: |
+      Redirect permanent / https://{{ project_url }}
+# apache_vhosts:
+#   - servername: '{{ project_url }}'
+#     documentroot: '{{ projects_folder }}/{{ project_name }}'
+#     extra_parameters: '{{ apache_extra_vhost_parameters }}'
+apache_vhosts_ssl:
+  - servername: '{{ project_url }}'
+    documentroot: '{{ projects_folder }}/{{ project_name }}'
+    certificate_file: '/etc/letsencrypt/live/{{ project_url }}/fullchain.pem'
+    certificate_key_file: '/etc/letsencrypt/live/{{ project_url }}/privkey.pem'
+    extra_parameters: '{{ apache_extra_vhost_ssl_parameters }}'
+
+mysql_databases:
+  - name: '{{ project_name }}'
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+mysql_users:
+  - name: '{{ project_name }}'
+    host: '%'
+    password: '{{ project_database_password }}'
+    priv: '{{ project_name }}.*:ALL'

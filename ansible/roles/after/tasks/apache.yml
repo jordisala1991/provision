@@ -1,4 +1,21 @@
 ---
+- name: Create app folder
+  file:
+    path: '{{ projects_folder }}/{{ project_name }}'
+    owner: '{{ apache_user }}'
+    group: '{{ apache_user }}'
+    mode: 0775
+    state: directory
+  register: folder_result
+
+- name: Create index file
+  template:
+    src: index.php
+    dest: '{{ projects_folder }}/{{ project_name }}/index.php'
+    owner: '{{ user }}'
+    group: '{{ user }}'
+  when: folder_result|changed
+
 - name: Add deflate settings
   template:
     src: deflate.conf
@@ -8,15 +25,3 @@
   template:
     src: mpm.conf
     dest: '{{ apache_conf_path }}/mpm.conf'
-
-- name: Disable mpm_prefork
-  lineinfile:
-    dest: '{{ apache_server_root }}/conf.modules.d/00-mpm.conf'
-    regexp: '^LoadModule mpm_prefork_module modules/mod_mpm_prefork.so'
-    line: '# LoadModule mpm_prefork_module modules/mod_mpm_prefork.so'
-
-- name: Enable mpm_event
-  lineinfile:
-    dest: '{{ apache_server_root }}/conf.modules.d/00-mpm.conf'
-    regexp: '^# ?LoadModule mpm_event_module modules/mod_mpm_event.so'
-    line: 'LoadModule mpm_event_module modules/mod_mpm_event.so'
