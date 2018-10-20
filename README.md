@@ -13,6 +13,11 @@ ansible-playbook playbook.yml --extra-vars="target=project" --user root
 cd /etc/nginx
 sudo mkdir ssl
 sudo openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+
+vi /etc/sysconfig/selinux
+setenforce permissive
+
+usermod -a -G provision nginx
 ```
 
 # Features
