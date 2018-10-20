@@ -1,0 +1,18 @@
+---
+email: email
+project_name: project
+host: host
+
+mysql_users:
+  - name: '{{ project_name }}'
+    host: '%'
+    password: password
+    priv: '{{ project_name }}.*:ALL'
+
+certbot_certs:
+  - email: '{{ email }}'
+    domains:
+      - '{{ host }}'
+
+# cronjobs:
+#   - { minute: '*/2', hour: '*', day: '*', month: '*', weekday: '*', job: 'php {{ project_remote_folder }}/current/bin/console swiftmailer:spool:send --env=prod --time-limit=90 --no-interaction >> {{ project_remote_logs }}/swiftmailer-cron.log 2>&1', name: 'Swiftmailer spool send' }

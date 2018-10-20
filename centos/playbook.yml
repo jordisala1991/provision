@@ -1,26 +1,27 @@
 ---
-- hosts: all
+- hosts: "{{ target|default('none') }}"
   become: true
   vars_files:
-    - vars/secret.yml
-    - vars/configuration.yml
-    - vars/project.yml
+    - vars.yml
   gather_facts: false
   pre_tasks:
     - name: Ensure python is installed
       raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
       changed_when: false
+    - name: Include dynamic vars depending on configuration
+      include_vars:
+        file: '{{ configuration }}.yml'
+      ignore_errors: yes
     - setup: # gather_facts
   roles:
     - before
-    - Stouts.timezone
+    - yatesr.timezone
     - Stouts.locale
     - GROG.package
     - geerlingguy.certbot
-    - ssl
+    - geerlingguy.nginx
     - geerlingguy.mysql
-    - geerlingguy.apache
     - geerlingguy.php
-    - geerlingguy.php-pecl
-    - geerlingguy.apache-php-fpm
+    - geerlingguy.composer
+    - cron
     - after

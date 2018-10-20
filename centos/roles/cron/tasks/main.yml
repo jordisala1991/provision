@@ -1,0 +1,13 @@
+---
+- name: Configure cron jobs
+  become: false
+  cron:
+    job: '{{ item.job }}'
+    name: '{{ item.name }}'
+    minute: '{{ item.minute }}'
+    hour: '{{ item.hour }}'
+    day: '{{ item.day }}'
+    month: '{{ item.month }}'
+    weekday: '{{ item.weekday }}'
+  with_items: '{{ cronjobs }}'
+  when: cronjobs is defined

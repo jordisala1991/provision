@@ -1,0 +1,33 @@
+---
+- name: Modify settings on php-fpm
+  lineinfile:
+    dest: '{{ php_fpm_pool_conf_path }}'
+    regexp: ';?{{ item.setting }} ?=.*'
+    line: '{{ item.setting }} = {{ item.value }}'
+  with_items: '{{ php_fpm_settings }}'
+
+- name: Modify settings on php.ini
+  lineinfile:
+    dest: '/etc/php.ini'
+    regexp: ';?{{ item.setting }} ?=.*'
+    line: '{{ item.setting }} = {{ item.value }}'
+  with_items: '{{ php_settings }}'
+
+- name: Set php-fpm permissions
+  file:
+    path: /var/lib/php/fpm
+    group: nginx
+    owner: '{{ user }}'
+    recurse: yes
+
+- name: Configure session maxlifetime script
+  template:
+    src: maxlifetime
+    dest: /etc/maxlifetime
+    mode: 0755
+
+- name: Configure session removal cronjob
+  cron:
+    name: 'purge old sessions'
+    minute: '9,39'
+    job: '[ -d /var/lib/php/fpm/session ] && find /var/lib/php/fpm/session -type f -cmin +$(/etc/maxlifetime) -print0 | xargs -r -0 rm'

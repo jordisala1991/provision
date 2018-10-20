@@ -1,25 +1,19 @@
 # Provision
 
-*This only works for CentOS 7*
-
 # How to use
 
 Create your `hosts` file using `hosts.dist`
-Create your `secret.yml` file using `secret.yml.dist`
+Create your `project.yml` file using `project.yml.dist`
 
 ```bash
-ansible-galaxy install -r ansible/requirements.yml
-ansible-playbook ansible/playbook.yml --user root
+cd centos
+ansible-galaxy install -r requirements.yml
+ansible-playbook playbook.yml --user root
 ```
 
 # Features
 
 - Php 7.1
-- Apache 2.4
+- Nginx 1.15
 - MariaDB 10.1
 - Let's encrypt SSL
-
-# To Do
-
-- Add Debian support
-- Add nginx support

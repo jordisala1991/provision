@@ -1,4 +1,8 @@
 ---
+- name: Create user
+  user:
+    name: '{{ user }}'
+
 - name: Add codeit.guru repository
   get_url:
     url: https://repo.codeit.guru/codeit.el7.repo

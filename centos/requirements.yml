@@ -1,0 +1,23 @@
+- src: geerlingguy.certbot
+  version: 3.0.0
+
+- src: geerlingguy.nginx
+  version: 2.6.0
+
+- src: geerlingguy.mysql
+  version: 2.9.2
+
+- src: geerlingguy.php
+  version: 3.6.1
+
+- src: geerlingguy.composer
+  version: 1.7.2
+
+- src: GROG.package
+  version: v1.2.4
+
+- src: Stouts.locale
+  version: 1.1.0
+
+- src: yatesr.timezone
+  version: 1.1.0

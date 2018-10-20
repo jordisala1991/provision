@@ -1,4 +1,3 @@
-ansible/playbook.retry
-ansible/requirements
-ansible/vars/secret.yml
+playbook.retry
+requirements
 hosts

@@ -1,0 +1,17 @@
+---
+- name: Configure user
+  user:
+    name: '{{ user }}'
+    createhome: no
+    append: yes
+    groups: nginx
+
+- name: Create app folder
+  file:
+    path: '{{ project_remote_folder }}'
+    owner: nginx
+    group: nginx
+    mode: 0775
+    state: directory
+
+- include: php.yml
