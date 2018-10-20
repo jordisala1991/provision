@@ -133,7 +133,7 @@ nginx_vhosts:
 
       ssl_stapling on;
       ssl_stapling_verify on;
-      ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+      # ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 
       resolver_timeout 5s;
       resolver 1.1.1.1 1.0.0.1 valid=300s;
