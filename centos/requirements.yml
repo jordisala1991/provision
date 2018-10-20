@@ -1,17 +1,17 @@
 - src: geerlingguy.certbot
-  version: 3.0.0
+  version: 3.0.2
 
 - src: geerlingguy.nginx
-  version: 2.6.0
+  version: 2.6.1
 
 - src: geerlingguy.mysql
-  version: 2.9.2
+  version: 2.9.4
 
 - src: geerlingguy.php
-  version: 3.6.1
+  version: 3.6.3
 
 - src: geerlingguy.composer
-  version: 1.7.2
+  version: 1.7.3
 
 - src: GROG.package
   version: v1.2.4
